@@ -1,5 +1,6 @@
 import { cn } from "../lib/utils";
 import { MessageSquare, Heart, Share2, Users, Monitor, Bot } from "lucide-react";
+import React from "react";
 import { FollowCursorCard } from "./FollowCursorCard";
 
 // Mocks

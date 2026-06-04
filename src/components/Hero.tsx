@@ -7,18 +7,19 @@ export function Hero() {
     <section className="relative min-h-[90vh] flex flex-col justify-center items-center py-20 px-4 md:px-8 max-w-7xl mx-auto w-full">
       <div className="relative z-10 flex flex-col items-center text-center w-full max-w-4xl mx-auto space-y-10 mt-12 mb-20">
         
-        <motion.div 
+        <motion.a 
+          href="#changelog"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 bg-secondary border border-border rounded-full text-xs font-medium text-muted-foreground shadow-sm"
+          className="inline-flex items-center gap-2 px-4 py-1.5 bg-secondary border border-border rounded-full text-xs font-medium text-muted-foreground shadow-sm hover:border-primary/30 transition-colors"
         >
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
           </span>
-          AnySoul 2.0 is now live
-        </motion.div>
+          AnySoul 3.5.4 更新已发布
+        </motion.a>
 
         <motion.h1 
           initial={{ opacity: 0, y: 20 }}

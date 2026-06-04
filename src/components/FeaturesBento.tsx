@@ -60,7 +60,7 @@ const features = [
        <div className="relative h-full w-full overflow-hidden bg-[#fafafa]">
           <div className="absolute right-0 top-0 size-64 bg-primary/5 rounded-full blur-[80px]" />
           <div className="p-8 flex items-center justify-center gap-6 h-full">
-            <div className="p-4 rounded-2xl border border-border shadow-[0_2px_10px_rgb(0,0,0,0.02)] bg-card group hover:border-primary/50 transition-colors">
+            <div className="p-4 rounded-2xl border-2 border-border shadow-[0_2px_10px_rgb(0,0,0,0.02)] bg-card group hover:border-primary/50 transition-colors">
                <Database className="size-6 text-muted-foreground group-hover:text-primary transition-colors" strokeWidth={1} />
             </div>
             <div className="flex-1 max-w-[100px] h-px bg-border/80 relative">
@@ -86,7 +86,7 @@ const containerVariants = {
 
 const itemVariants = {
   hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 20 } }
+  show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 100, damping: 20 } }
 };
 
 export function FeaturesBento() {

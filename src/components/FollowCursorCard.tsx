@@ -1,12 +1,13 @@
 import { cn } from "../lib/utils";
 import { motion, useMotionValue, useSpring, Variants } from "motion/react";
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
-interface FollowCursorCardProps {
+interface FollowCursorCardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   className?: string;
   cursorText?: string;
   variants?: Variants;
+  key?: React.Key;
 }
 
 export function FollowCursorCard({ 

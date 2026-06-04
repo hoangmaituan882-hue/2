@@ -40,7 +40,7 @@
 }
 
 @layer base {
-  :root, .dark {
+  :root {
     --background: #ffffff;
     --foreground: #0a0a0a;
     --card: #ffffff;
@@ -61,6 +61,28 @@
     --input: #e4e4e7;
     --ring: #869e71;
     --radius: 1.5rem;
+  }
+  
+  .dark {
+    --background: #09090b;
+    --foreground: #fafafa;
+    --card: #09090b;
+    --card-foreground: #fafafa;
+    --popover: #09090b;
+    --popover-foreground: #fafafa;
+    --primary: #abc378; /* Lighter Green for dark mode */
+    --primary-foreground: #09090b;
+    --secondary: #27272a;
+    --secondary-foreground: #fafafa;
+    --muted: #27272a;
+    --muted-foreground: #a1a1aa;
+    --accent: #27272a;
+    --accent-foreground: #fafafa;
+    --destructive: #7f1d1d;
+    --destructive-foreground: #fafafa;
+    --border: #27272a;
+    --input: #27272a;
+    --ring: #abc378;
   }
 }
 

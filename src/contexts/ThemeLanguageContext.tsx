@@ -8,6 +8,8 @@ interface ThemeLanguageContextType {
   language: Language;
   toggleTheme: () => void;
   toggleLanguage: () => void;
+  setTheme: (theme: Theme) => void;
+  setLanguage: (lang: Language) => void;
   t: (key: string) => string;
 }
 
@@ -15,7 +17,7 @@ const ThemeLanguageContext = createContext<ThemeLanguageContextType | undefined>
 
 const translations: Record<Language, Record<string, string>> = {
   zh: {
-    "header.blog": "博客",
+    "header.blog": "更新记录",
     "header.login": "登录",
     "header.discover": "发现",
     "header.experience": "在线体验",
@@ -35,7 +37,7 @@ const translations: Record<Language, Record<string, string>> = {
     "plaza.active": "上次活跃于 {days} 天前"
   },
   ja: {
-    "header.blog": "ブログ",
+    "header.blog": "更新履歴",
     "header.login": "ログイン",
     "header.discover": "発見",
     "header.experience": "体験する",
@@ -55,7 +57,7 @@ const translations: Record<Language, Record<string, string>> = {
     "plaza.active": "{days}日前にアクティブ"
   },
   en: {
-    "header.blog": "Blog",
+    "header.blog": "Changelog",
     "header.login": "Login",
     "header.discover": "Discover",
     "header.experience": "Try Now",
@@ -99,7 +101,7 @@ export function ThemeLanguageProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <ThemeLanguageContext.Provider value={{ theme, language, toggleTheme, toggleLanguage, t }}>
+    <ThemeLanguageContext.Provider value={{ theme, language, toggleTheme, toggleLanguage, setTheme, setLanguage, t }}>
       {children}
     </ThemeLanguageContext.Provider>
   );

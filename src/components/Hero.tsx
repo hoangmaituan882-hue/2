@@ -53,8 +53,28 @@ export function Hero() {
     <section className="relative min-h-[90vh] flex flex-col justify-center items-center py-20 px-4 md:px-8 max-w-7xl mx-auto w-full">
       <div className="relative z-10 flex flex-col items-center text-center w-full max-w-4xl mx-auto space-y-4 mt-8 mb-20">
         
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 5.0, ease: "easeOut" }}
+          className="relative z-20 mt-12 mb-2"
+        >
+          <a
+            href="#changelog"
+            className="group relative inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 hover:bg-primary/10 backdrop-blur-md shadow-[0_0_20px_rgba(164,198,57,0.1)] hover:shadow-[0_0_25px_rgba(164,198,57,0.2)] transition-all cursor-pointer"
+          >
+            <div className="absolute inset-0 rounded-full border border-primary/40 animate-[ping_2.5s_ease-in-out_infinite] opacity-30 -z-10" />
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-500 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-orange-500"></span>
+            </span>
+            <span className="text-[12px] font-semibold text-foreground transition-colors group-hover:text-primary">AnySoul 更新记录</span>
+            <ArrowRight className="size-3.5 text-muted-foreground group-hover:text-primary transition-colors group-hover:translate-x-0.5" />
+          </a>
+        </motion.div>
+
         <motion.h1 
-          className="text-5xl md:text-7xl font-bold tracking-tight text-foreground leading-tight relative mt-16 z-10"
+          className="text-5xl md:text-7xl font-bold tracking-tight text-foreground leading-tight relative z-10"
           initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.6, delay: 4.0, ease: "easeOut" }}

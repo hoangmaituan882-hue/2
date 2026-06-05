@@ -1,5 +1,5 @@
 import { cn } from "../lib/utils";
-import { Menu, ChevronDown, Moon, Sun, Languages, User, Compass } from "lucide-react";
+import { Menu, ChevronDown, Moon, Sun, Languages, User, Compass, Newspaper } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { useThemeLanguage } from "../contexts/ThemeLanguageContext";
@@ -8,7 +8,7 @@ import { AuthModal } from "./AuthModal";
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const { theme, toggleTheme, language, toggleLanguage, t } = useThemeLanguage();
+  const { theme, toggleTheme, setTheme, language, toggleLanguage, setLanguage, t } = useThemeLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,7 +27,7 @@ export function Header() {
     >
       <div
         className={cn(
-          "pointer-events-auto flex items-center justify-between w-full h-[60px] px-5 md:px-8 overflow-hidden transition-all duration-500 ease-out border",
+          "pointer-events-auto flex items-center justify-between w-full h-[60px] px-5 md:px-8 transition-all duration-500 ease-out border",
           isScrolled 
             ? "max-w-4xl rounded-full bg-card/95 backdrop-blur-md border-border shadow-sm" 
             : "max-w-6xl rounded-full bg-transparent border-transparent shadow-none"
@@ -51,42 +51,55 @@ export function Header() {
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1.5 flex-shrink-0">
-          <div className="flex flex-col items-center mr-1">
-            <div className={cn("inline-flex items-stretch overflow-hidden rounded-full border transition-colors duration-300", 
-              isScrolled ? "border-border/80 bg-muted/40" : "border-transparent bg-transparent"
-            )}>
-              <button className="inline-flex items-center justify-center h-8 px-3 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
-                {language === "zh" ? "中" : language === "ja" ? "日" : "EN"}
-              </button>
-              <div className={cn("w-px my-0.5 transition-colors duration-300", isScrolled ? "bg-border/80" : "bg-transparent")} />
-              <button className="inline-flex items-center justify-center h-8 px-2 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
-                <ChevronDown className={cn("size-3.5 transition-colors", isScrolled ? "text-muted-foreground" : "text-foreground")} />
-              </button>
+        <nav className="hidden md:flex items-center gap-1 flex-shrink-0 z-50 h-full">
+          <div className="relative group flex items-center h-full mr-2">
+            {/* The Arrow Button */}
+            <div className="flex items-center justify-center w-[36px] h-full cursor-default">
+              <ChevronDown className={cn("size-4 transition-transform duration-500 group-hover:rotate-180", isScrolled ? "text-muted-foreground group-hover:text-foreground" : "text-foreground")} />
+            </div>
+
+            {/* The Geometric Deformation Leg */}
+            <div className="absolute top-[59px] left-[50%] -translate-x-1/2 w-[36px] flex flex-col items-center z-10 pointer-events-none group-hover:pointer-events-auto">
+               <div className={cn(
+                   "w-full flex flex-col items-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] origin-top rounded-b-[18px]",
+                   isScrolled 
+                     ? "bg-card/95 backdrop-blur-md border-x border-b border-border shadow-[0_8px_16px_rgba(0,0,0,0.06)]" 
+                     : "bg-black/5 dark:bg-white/5 backdrop-blur-md border-x border-b border-transparent shadow-none",
+                   "h-0 group-hover:h-[150px] opacity-0 group-hover:opacity-100"
+               )}>
+                   
+                   <div className="flex flex-col items-center w-full pt-2 pb-3 gap-1.5 z-20">
+                     <button onClick={toggleTheme} className={cn("flex items-center justify-center rounded-full w-[28px] h-[28px] transition-colors", isScrolled ? "hover:bg-muted" : "hover:bg-black/10 dark:hover:bg-white/10")} title="Switch Theme">
+                       {theme === 'light' ? <Sun className="size-3.5 text-orange-500" /> : <Moon className="size-3.5 text-foreground/80" />}
+                     </button>
+                     
+                     <button onClick={() => setLanguage("zh")} className={cn("flex items-center justify-center text-[11px] font-medium rounded-full w-[28px] h-[28px] transition-colors", language === "zh" ? "bg-primary/20 text-primary" : (isScrolled ? "text-foreground/80 hover:bg-muted" : "text-foreground/80 hover:bg-black/10 dark:hover:bg-white/10"))} title="简体中文">
+                       简
+                     </button>
+                     <button onClick={() => setLanguage("en")} className={cn("flex items-center justify-center text-[10px] font-medium rounded-full w-[28px] h-[28px] transition-colors", language === "en" ? "bg-primary/20 text-primary" : (isScrolled ? "text-foreground/80 hover:bg-muted" : "text-foreground/80 hover:bg-black/10 dark:hover:bg-white/10"))} title="English">
+                       EN
+                     </button>
+                     <button onClick={() => setLanguage("ja")} className={cn("flex items-center justify-center text-[11px] font-medium rounded-full w-[28px] h-[28px] transition-colors", language === "ja" ? "bg-primary/20 text-primary" : (isScrolled ? "text-foreground/80 hover:bg-muted" : "text-foreground/80 hover:bg-black/10 dark:hover:bg-white/10"))} title="日本語">
+                       日
+                     </button>
+                   </div>
+               </div>
             </div>
           </div>
 
-          <button 
-            onClick={toggleTheme}
-            className="inline-flex items-center justify-center size-9 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-foreground"
-          >
-             {theme === "light" ? <Moon className="size-4" strokeWidth={2} /> : <Sun className="size-4" strokeWidth={2} />}
-          </button>
-          
-          <button 
-            onClick={toggleLanguage}
-            className={cn("inline-flex items-center justify-center size-9 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-foreground", language === 'ja' && 'bg-primary/20 text-primary')}
-            title="Switch Language"
-          >
-             <Languages className="size-4" strokeWidth={2} />
-          </button>
-
-          <button onClick={() => setIsAuthModalOpen(true)} className={cn("inline-flex items-center gap-1.5 h-[36px] px-4 rounded-full border transition-all duration-300 font-bold text-sm text-foreground ml-1", 
+          <button onClick={() => setIsAuthModalOpen(true)} className={cn("inline-flex items-center gap-1.5 h-[36px] px-4 rounded-full border transition-all duration-300 font-bold text-sm text-foreground ml-1",  
             isScrolled ? "border-border bg-card hover:bg-muted shadow-[0_2px_10px_rgb(0,0,0,0.02)]" : "border-transparent bg-transparent hover:bg-black/5 dark:hover:bg-white/5 shadow-none"
           )}>
              <User className="size-4" />
              <span>{t("header.login")}</span>
           </button>
+
+          <a href="#changelog" className={cn("inline-flex items-center gap-1.5 h-[36px] px-4 rounded-full border transition-all duration-300 font-bold text-sm text-foreground ml-0.5", 
+            isScrolled ? "border-border bg-card hover:bg-muted shadow-[0_2px_10px_rgb(0,0,0,0.02)]" : "border-transparent bg-transparent hover:bg-black/5 dark:hover:bg-white/5 shadow-none"
+          )}>
+             <Newspaper className="size-4" />
+             <span>{t("header.blog")}</span>
+          </a>
 
           <a href="#plaza" className={cn("inline-flex items-center gap-1.5 h-[36px] px-4 rounded-full border transition-all duration-300 font-bold text-sm text-foreground ml-0.5", 
             isScrolled ? "border-border bg-card hover:bg-muted shadow-[0_2px_10px_rgb(0,0,0,0.02)]" : "border-transparent bg-transparent hover:bg-black/5 dark:hover:bg-white/5 shadow-none"
@@ -102,6 +115,9 @@ export function Header() {
 
         {/* Mobile Navigation */}
         <nav className="flex md:hidden items-center gap-1 flex-shrink-0">
+          <a href="#changelog" className="inline-flex items-center justify-center size-9 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-foreground">
+             <Newspaper className="size-4" strokeWidth={2} />
+          </a>
           <a href="#plaza" className="inline-flex items-center justify-center size-9 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-foreground">
              <Compass className="size-4" strokeWidth={2} />
           </a>

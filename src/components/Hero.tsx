@@ -79,7 +79,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.6, delay: 4.0, ease: "easeOut" }}
         >
-          不只是聊天机器人
+          关于我所喜欢的是
         </motion.h1>
 
         <div className="relative flex justify-center items-center py-4 w-full h-[120px] md:h-[160px]">
@@ -137,8 +137,8 @@ export function Hero() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.6, delay: 4.2, ease: "easeOut" }}
           >
-            <span className="text-[#a4c639]">一个由你塑造的</span>
-            <span className="text-[#ea4c89]">灵魂</span>
+            <span className="text-[#a4c639]">东半球动漫皇帝</span>
+            <span className="text-[#ea4c89]">泛式</span>
           </motion.h2>
         </div>
 
@@ -148,7 +148,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 4.4, ease: "easeOut" }}
         >
-          Ta 可以是 你的搭子 / 你的伴侣 / 是由你后天养成的灵魂
+          八年百大up主，全平台千万粉主播，NTR教父
         </motion.p>
       </div>
 

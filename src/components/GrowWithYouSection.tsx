@@ -58,7 +58,7 @@ export function GrowWithYouSection() {
     }, [activeStep]);
 
     return (
-        <section className="py-24 px-4 bg-[#fafafa] relative flex justify-center mt-12 border-t border-border/50">
+        <section className="py-32 md:py-48 px-4 bg-[#fafafa] relative flex justify-center mt-12 border-y border-border/50">
             <div className="max-w-6xl w-full flex flex-col items-center">
                 
                 {/* Title */}

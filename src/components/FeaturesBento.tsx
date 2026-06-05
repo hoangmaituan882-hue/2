@@ -91,7 +91,7 @@ const itemVariants = {
 
 export function FeaturesBento() {
   return (
-    <section id="features" className="py-32 px-4 w-full max-w-7xl mx-auto">
+    <section id="features" className="py-32 md:py-48 px-4 w-full max-w-7xl mx-auto">
       <div className="mb-20 text-center">
         <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-foreground">
           Engineered for <span className="text-muted-foreground font-normal">Excellence</span>

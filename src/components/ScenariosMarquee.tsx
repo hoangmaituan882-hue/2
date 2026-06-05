@@ -119,7 +119,7 @@ const scenarios = [
 
 export function ScenariosMarquee() {
     return (
-        <section className="py-24 overflow-hidden bg-[#fafafa] border-y border-border">
+        <section id="scenarios" className="py-32 md:py-48 overflow-hidden bg-[#fafafa] border-y border-border">
             <div className="text-center mb-16 px-4">
                 <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-foreground">
                     你想创造<span className="text-muted-foreground font-normal">什么？</span>

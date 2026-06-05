@@ -64,8 +64,8 @@ export default function App() {
           <GrowWithYouSection />
           <FeaturesBento />
           <ScenariosMarquee />
-          <MarqueeSection />
           <Pricing />
+          <MarqueeSection />
           <FAQSection />
         </main>
         <Footer />

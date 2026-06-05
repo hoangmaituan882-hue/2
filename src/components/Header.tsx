@@ -1,11 +1,13 @@
 import { cn } from "../lib/utils";
-import { Menu, ChevronDown, Moon, Sun, Languages, Newspaper, Compass } from "lucide-react";
+import { Menu, ChevronDown, Moon, Sun, Languages, User, Compass } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { useThemeLanguage } from "../contexts/ThemeLanguageContext";
+import { AuthModal } from "./AuthModal";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const { theme, toggleTheme, language, toggleLanguage, t } = useThemeLanguage();
 
   useEffect(() => {
@@ -79,12 +81,12 @@ export function Header() {
              <Languages className="size-4" strokeWidth={2} />
           </button>
 
-          <a href="#" className={cn("inline-flex items-center gap-1.5 h-[36px] px-4 rounded-full border transition-all duration-300 font-bold text-sm text-foreground ml-1", 
+          <button onClick={() => setIsAuthModalOpen(true)} className={cn("inline-flex items-center gap-1.5 h-[36px] px-4 rounded-full border transition-all duration-300 font-bold text-sm text-foreground ml-1", 
             isScrolled ? "border-border bg-card hover:bg-muted shadow-[0_2px_10px_rgb(0,0,0,0.02)]" : "border-transparent bg-transparent hover:bg-black/5 dark:hover:bg-white/5 shadow-none"
           )}>
-             <Newspaper className="size-4" />
-             <span>{t("header.blog")}</span>
-          </a>
+             <User className="size-4" />
+             <span>{t("header.login")}</span>
+          </button>
 
           <a href="#plaza" className={cn("inline-flex items-center gap-1.5 h-[36px] px-4 rounded-full border transition-all duration-300 font-bold text-sm text-foreground ml-0.5", 
             isScrolled ? "border-border bg-card hover:bg-muted shadow-[0_2px_10px_rgb(0,0,0,0.02)]" : "border-transparent bg-transparent hover:bg-black/5 dark:hover:bg-white/5 shadow-none"
@@ -114,6 +116,7 @@ export function Header() {
           </button>
         </nav>
       </div>
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
     </header>
   );
 }

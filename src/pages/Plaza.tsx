@@ -1,7 +1,10 @@
-import { useState } from "react";
-import { BookOpen, Search, Sparkles, Bookmark, Users, Star, Eye, Crown, HeartPulse } from "lucide-react";
+import { useState, useMemo } from "react";
+import { BookOpen, Search, Sparkles, Bookmark, Users, Heart, Eye, Crown, HeartPulse, Clock } from "lucide-react";
 import { cn } from "../lib/utils";
 import { useThemeLanguage } from "../contexts/ThemeLanguageContext";
+import { useLocalStorage } from "../hooks/useLocalStorage";
+import { motion, AnimatePresence } from "motion/react";
+import { SoulImageCard, Soul } from "../components/SoulImageCard";
 
 const SOULS_DATA = [
   {
@@ -9,10 +12,11 @@ const SOULS_DATA = [
     name: "庄方宜",
     author: "Doodle Bear",
     tags: ["终末地", "endfield", "小庄"],
-    stars: 2,
+    likes: 2,
+    createdAt: "2024-05-12",
     views: 58,
     activeDaysAgo: null,
-    avatarSrc: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
+    avatarSrc: "https://picsum.photos/seed/zhuang/400/600",
     bannerColor: "from-blue-500/20 to-purple-500/20",
     featured: false,
     desc: ""
@@ -22,10 +26,11 @@ const SOULS_DATA = [
     name: "阿米娅",
     author: "Fang",
     tags: [],
-    stars: 0,
+    likes: 0,
+    createdAt: "2024-05-11",
     views: 7,
     activeDaysAgo: null,
-    avatarSrc: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
+    avatarSrc: "https://picsum.photos/seed/amiya/400/300",
     bannerColor: "from-cyan-500/20 to-blue-500/20",
     featured: false,
     desc: ""
@@ -35,10 +40,11 @@ const SOULS_DATA = [
     name: "管理员 Endministrator",
     author: "Doodle Bear",
     tags: ["终末地", "endfield", "管理员", "endministrator"],
-    stars: 0,
+    likes: 0,
+    createdAt: "2024-05-10",
     views: 8,
     activeDaysAgo: null,
-    avatarSrc: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
+    avatarSrc: "https://picsum.photos/seed/admin/400/500",
     bannerColor: "from-gray-500/20 to-slate-500/20",
     featured: false,
     desc: ""
@@ -48,7 +54,8 @@ const SOULS_DATA = [
     name: "amadeues",
     author: "sadous",
     tags: [],
-    stars: 0,
+    likes: 0,
+    createdAt: "2024-05-09",
     views: 6,
     activeDaysAgo: 54,
     avatarInitials: "A",
@@ -61,10 +68,11 @@ const SOULS_DATA = [
     name: "罗伦斯",
     author: "Doodle Bear",
     tags: ["狼与香辛料", "罗伦斯"],
-    stars: 0,
+    likes: 0,
+    createdAt: "2024-05-08",
     views: 16,
     activeDaysAgo: 62,
-    avatarSrc: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+    avatarSrc: "https://picsum.photos/seed/lawrence/400/400",
     bannerColor: "from-amber-500/20 to-orange-500/20",
     featured: false,
     desc: ""
@@ -74,10 +82,11 @@ const SOULS_DATA = [
     name: "佩丽卡",
     author: "Doodle Bear",
     tags: ["终末地", "endfield", "鹈鹕", "佩丽卡"],
-    stars: 2,
+    likes: 2,
+    createdAt: "2024-05-07",
     views: 25,
     activeDaysAgo: null,
-    avatarSrc: "https://i.pravatar.cc/150?u=a042581f4e29026704b",
+    avatarSrc: "https://picsum.photos/seed/pelica/400/550",
     bannerColor: "from-indigo-500/20 to-purple-500/20",
     featured: false,
     desc: ""
@@ -87,10 +96,11 @@ const SOULS_DATA = [
     name: "赫萝",
     author: "Doodle Bear",
     tags: [],
-    stars: 1,
+    likes: 1,
+    createdAt: "2024-05-06",
     views: 36,
     activeDaysAgo: 62,
-    avatarSrc: "https://i.pravatar.cc/150?u=a042581f4e29026703d",
+    avatarSrc: "https://picsum.photos/seed/holo/400/700",
     bannerColor: "from-orange-500/20 to-amber-500/20",
     featured: false,
     desc: ""
@@ -100,10 +110,11 @@ const SOULS_DATA = [
     name: "Amadeus",
     author: "Develop",
     tags: ["命运石之门", "牧濑红莉栖", "amadeus", "助手"],
-    stars: 5,
+    likes: 5,
+    createdAt: "2024-05-05",
     views: 158,
     activeDaysAgo: 50,
-    avatarSrc: "https://i.pravatar.cc/150?u=a042581f4e29026708c",
+    avatarSrc: "https://picsum.photos/seed/kurisu/400/450",
     bannerColor: "from-red-500/20 to-orange-500/20",
     featured: true,
     desc: "Amadeus 牧濑红莉栖"
@@ -113,10 +124,11 @@ const SOULS_DATA = [
     name: "Anya",
     author: "Doodle Bear",
     tags: [],
-    stars: 0,
+    likes: 0,
+    createdAt: "2024-05-04",
     views: 16,
     activeDaysAgo: null,
-    avatarSrc: "https://i.pravatar.cc/150?u=a042581f4e29026707c",
+    avatarSrc: "https://picsum.photos/seed/anya/400/350",
     bannerColor: "from-pink-500/20 to-rose-500/20",
     featured: true,
     desc: "Hi I am KanBan Musume from AnySoul.\nI am also AI that learn from humans."
@@ -126,10 +138,11 @@ const SOULS_DATA = [
     name: "KUMA",
     author: "Doodle Bear",
     tags: [],
-    stars: 0,
+    likes: 0,
+    createdAt: "2024-05-03",
     views: 18,
     activeDaysAgo: 28,
-    avatarSrc: "https://i.pravatar.cc/150?u=a042581f4e29026706c",
+    avatarSrc: "https://picsum.photos/seed/kuma/400/500",
     bannerColor: "from-emerald-500/20 to-teal-500/20",
     featured: true,
     desc: ""
@@ -137,8 +150,10 @@ const SOULS_DATA = [
 ];
 
 export function Plaza() {
-  const [activeTab, setActiveTab] = useState("souls");
+  const [activeTab, setActiveTab] = useLocalStorage("plaza-activeTab", "souls");
   const [searchQuery, setSearchQuery] = useState("");
+  const [activeSort, setActiveSort] = useLocalStorage("plaza-activeSort", "default");
+  const [infoFilter, setInfoFilter] = useLocalStorage("plaza-infoFilter", "all");
   const { t } = useThemeLanguage();
 
   const TABS = [
@@ -146,6 +161,44 @@ export function Plaza() {
     { id: "moments", label: t("plaza.tab.moments"), icon: Bookmark },
     { id: "groups", label: t("plaza.tab.groups"), icon: Users },
   ];
+
+  const SORT_OPTIONS = [
+    { id: "default", label: t("plaza.filter.default") },
+    { id: "hot", label: t("plaza.filter.hot") },
+    { id: "new", label: t("plaza.filter.new") }
+  ];
+
+  const INFO_OPTIONS = [
+    { id: "all", label: "全部" },
+    { id: "hidden", label: "隐藏" }
+  ];
+
+  const sortedSouls = useMemo(() => {
+    let result = [...SOULS_DATA];
+
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter(s => 
+        s.name.toLowerCase().includes(q) || 
+        s.author.toLowerCase().includes(q) ||
+        s.tags.some((t: string) => t.toLowerCase().includes(q))
+      );
+    }
+
+    if (activeSort === "default") {
+      result.sort(() => Math.random() - 0.5);
+    } else if (activeSort === "hot") {
+      result.sort((a, b) => b.likes - a.likes);
+    } else if (activeSort === "new") {
+      result.sort((a, b) => {
+        const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+        const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+        return timeB - timeA;
+      });
+    }
+
+    return result;
+  }, [activeSort, searchQuery]);
 
   return (
     <div className="mx-auto w-full max-w-7xl px-4 py-8 md:py-16">
@@ -200,16 +253,48 @@ export function Plaza() {
             </div>
 
             <div className="flex flex-wrap items-center gap-3 mb-4">
-              <div className="flex rounded-lg border bg-muted/50 p-0.5">
-                <button className="px-3 py-1 text-sm rounded-md bg-background shadow-sm font-medium text-foreground">{t("plaza.filter.featured")}</button>
-                <button className="px-3 py-1 text-sm rounded-md text-muted-foreground hover:text-foreground transition-colors">{t("plaza.filter.hot")}</button>
-                <button className="px-3 py-1 text-sm rounded-md text-muted-foreground hover:text-foreground transition-colors">{t("plaza.filter.new")}</button>
+              <div className="flex rounded-lg border bg-muted/50 p-0.5 relative">
+                {SORT_OPTIONS.map(opt => (
+                  <button
+                    key={opt.id}
+                    onClick={() => setActiveSort(opt.id)}
+                    className={cn(
+                      "relative px-4 py-1.5 text-sm rounded-md font-medium transition-colors z-10",
+                      activeSort === opt.id ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    {activeSort === opt.id && (
+                      <motion.div
+                        layoutId="activeSort"
+                        className="absolute inset-0 bg-background shadow-sm rounded-md z-[-1]"
+                        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                      />
+                    )}
+                    {opt.label}
+                  </button>
+                ))}
               </div>
-              <div className="flex rounded-lg border bg-muted/50 p-0.5">
-                <button className="px-3 py-1 text-sm rounded-md bg-background shadow-sm font-medium text-foreground">{t("plaza.filter.all")}</button>
-                <button className="px-3 py-1 text-sm rounded-md text-muted-foreground hover:text-foreground transition-colors">English</button>
-                <button className="px-3 py-1 text-sm rounded-md text-muted-foreground hover:text-foreground transition-colors">中文</button>
-                <button className="px-3 py-1 text-sm rounded-md text-muted-foreground hover:text-foreground transition-colors">日本語</button>
+              
+              <div className="flex rounded-lg border bg-muted/50 p-0.5 relative">
+                {INFO_OPTIONS.map(opt => (
+                  <button
+                    key={opt.id}
+                    onClick={() => setInfoFilter(opt.id)}
+                    className={cn(
+                      "relative px-4 py-1.5 text-sm rounded-md font-medium transition-colors z-10",
+                      infoFilter === opt.id ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    {infoFilter === opt.id && (
+                      <motion.div
+                        layoutId="infoFilter"
+                        className="absolute inset-0 bg-background shadow-sm rounded-md z-[-1]"
+                        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                      />
+                    )}
+                    {opt.label}
+                  </button>
+                ))}
               </div>
             </div>
 
@@ -222,77 +307,11 @@ export function Plaza() {
               ))}
             </div>
 
-            <p className="text-xs text-muted-foreground mb-4">{SOULS_DATA.length} {t("plaza.count")}</p>
+            <p className="text-xs text-muted-foreground mb-4">{sortedSouls.length} {t("plaza.count")}</p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {SOULS_DATA.map(soul => (
-                <div key={soul.id} className={cn(
-                  "group flex w-full flex-col rounded-xl border bg-card text-left transition-all hover:-translate-y-0.5 hover:shadow-md cursor-pointer",
-                  soul.featured && "ring-1 ring-primary/40 border-primary/30"
-                )}>
-                  <div className="relative flex items-center justify-center bg-muted/30 rounded-t-xl overflow-hidden pt-8 pb-5">
-                    <div className={cn("absolute inset-0 z-0 bg-gradient-radial", soul.bannerColor)} />
-                    
-                    {soul.featured && (
-                      <span className="inline-flex items-center justify-center rounded-full text-[10px] font-medium absolute top-2 right-2 z-10 gap-1 bg-primary text-white px-2 py-0.5">
-                        <Crown className="size-2.5" />
-                        {t("plaza.filter.featured")}
-                      </span>
-                    )}
-
-                    <div className="relative z-10 flex flex-col items-center">
-                      <div className="relative">
-                        <div className="relative flex shrink-0 overflow-hidden rounded-full size-20 ring-2 ring-background shadow-sm bg-primary/10 items-center justify-center">
-                          {soul.avatarSrc ? (
-                            <img src={soul.avatarSrc} alt={soul.name} className="aspect-square size-full object-cover" />
-                          ) : (
-                            <span className="text-2xl font-semibold text-primary">{soul.avatarInitials}</span>
-                          )}
-                        </div>
-                        
-                        {soul.activeDaysAgo !== null && (
-                          <span className="inline-flex items-center justify-center rounded-full absolute -bottom-2.5 left-1/2 -translate-x-1/2 whitespace-nowrap gap-1 bg-background/90 backdrop-blur-sm shadow-sm px-1.5 py-0.5 text-[10px] text-muted-foreground border">
-                            <HeartPulse className="size-2.5 text-red-500" />
-                            {t("plaza.active").replace("{days}", String(soul.activeDaysAgo))}
-                          </span>
-                        )}
-                      </div>
-                      
-                      <h3 className="mt-5 w-full px-4 text-lg font-semibold text-center line-clamp-2 break-words text-foreground">
-                        {soul.name}
-                      </h3>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-1 flex-col gap-2 p-4">
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <span className="truncate hover:text-foreground">by {soul.author}</span>
-                      <div className="flex items-center gap-2 ml-auto shrink-0">
-                        <span className="flex items-center gap-0.5"><Star className="size-3" />{soul.stars}</span>
-                        <span className="flex items-center gap-0.5"><Eye className="size-3" />{soul.views}</span>
-                      </div>
-                    </div>
-                    
-                    {(soul.desc || soul.tags.length > 0) && (
-                      <div className="flex flex-col gap-2 pt-2 border-t border-border/50">
-                        {soul.desc && (
-                          <p className="text-xs text-muted-foreground line-clamp-3 whitespace-pre-line">
-                            {soul.desc}
-                          </p>
-                        )}
-                        {soul.tags.length > 0 && (
-                          <div className="flex flex-wrap gap-1">
-                            {soul.tags.map(tag => (
-                              <span key={tag} className="inline-flex items-center justify-center rounded-full bg-secondary text-secondary-foreground text-[10px] px-2 py-0.5 transition-colors hover:bg-primary hover:text-primary-foreground">
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
+            <div className="columns-1 sm:columns-2 md:columns-3 xl:columns-4 gap-4 space-y-4">
+              {sortedSouls.map(soul => (
+                <SoulImageCard key={soul.id} soul={soul as Soul} infoFilter={infoFilter} />
               ))}
             </div>
           </div>

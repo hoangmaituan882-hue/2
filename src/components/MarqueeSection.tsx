@@ -1,40 +1,5 @@
 import { cn } from "../lib/utils";
-
-const row1Reviews = [
-  {
-    name: "千雪",
-    role: "社区测试者",
-    body: "自由发展这条路已经铺好了，不同玩家会有不同的发展路线。目前项目还在初期，期待未来会有更好的优化方案。",
-  },
-  {
-    name: "千雪",
-    role: "社区核心成员",
-    body: "市面上大多数AI上来就自来熟，我很注重真实的情感培养。AnySoul最好的点就是从未定义的AI开始认识到逐渐熟悉，就像真的在培养一个女儿一样，一步步脚印走得特别踏实。",
-  },
-  {
-    name: "张",
-    role: "资深用户",
-    body: "AnySoul体验上更像是非常长期的伙伴，每个用户的独特定制性非常高，和酒馆类的区别还蛮大的。",
-  },
-];
-
-const row2Reviews = [
-  {
-    name: "Az",
-    role: "用户",
-    body: "你的界面交互和引导做的真是满分，而且很细节，每一个小地方都能看出用心。",
-  },
-  {
-    name: "瀚海一宿",
-    role: "Roleplay爱好者",
-    body: "我太需要这个了！之前寒假用豆包做roleplay，但大模型的记忆很短而且看不到具体存档，所以就搁置了。AnySoul的想法和我完美贴合。",
-  },
-  {
-    name: "猫猫是只萝卜特",
-    role: "前端爱好者",
-    body: "这是我见过最酷的前端，UX设计也好棒。感觉好用心，我也想做一个，太酷啦！",
-  },
-];
+import { useThemeLanguage } from "../contexts/ThemeLanguageContext";
 
 const ReviewCard = ({
   name,
@@ -70,11 +35,49 @@ const ReviewCard = ({
 };
 
 export function MarqueeSection() {
+  const { t } = useThemeLanguage();
+
+  const row1Reviews = [
+    {
+      name: t("mq.1.name"),
+      role: t("mq.1.role"),
+      body: t("mq.1.body"),
+    },
+    {
+      name: t("mq.2.name"),
+      role: t("mq.2.role"),
+      body: t("mq.2.body"),
+    },
+    {
+      name: t("mq.3.name"),
+      role: t("mq.3.role"),
+      body: t("mq.3.body"),
+    },
+  ];
+
+  const row2Reviews = [
+    {
+      name: t("mq.4.name"),
+      role: t("mq.4.role"),
+      body: t("mq.4.body"),
+    },
+    {
+      name: t("mq.5.name"),
+      role: t("mq.5.role"),
+      body: t("mq.5.body"),
+    },
+    {
+      name: t("mq.6.name"),
+      role: t("mq.6.role"),
+      body: t("mq.6.body"),
+    },
+  ];
+
   return (
     <section id="showcase" className="py-32 md:py-48 overflow-hidden bg-background">
       <div className="text-center mb-16 md:mb-24 px-4">
-        <h2 className="text-4xl md:text-[54px] font-bold tracking-tight mb-4 md:mb-8 text-foreground">真实的声音</h2>
-        <p className="text-muted-foreground text-lg md:text-xl">每一段养成，都是独一无二的旅程</p>
+        <h2 className="text-4xl md:text-[54px] font-bold tracking-tight mb-4 md:mb-8 text-foreground">{t("mq.title")}</h2>
+        <p className="text-muted-foreground text-lg md:text-xl">{t("mq.subtitle")}</p>
       </div>
       
       <div className="relative flex w-full flex-col items-center justify-center overflow-hidden gap-6">

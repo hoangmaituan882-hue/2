@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { X, Check, RefreshCcw } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { useThemeLanguage } from "../contexts/ThemeLanguageContext";
 
 export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [isLogin, setIsLogin] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
   const [verified, setVerified] = useState(false);
+  const { t } = useThemeLanguage();
 
   // Reset state when modal opens
   useEffect(() => {
@@ -87,10 +89,10 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
                 
                 <div className="space-y-2.5">
                   <h2 className="font-bold text-[26px] tracking-tight text-foreground leading-none">
-                    {isLogin ? "欢迎回来" : "创建账户"}
+                    {isLogin ? t("auth.welcome") : t("auth.create")}
                   </h2>
                   <p className="text-[15px] text-muted-foreground font-medium">
-                    {isLogin ? "登录你的 AnySoul 账户" : "开始你的 AnySoul 之旅"}
+                    {isLogin ? t("auth.login.desc") : t("auth.register.desc")}
                   </p>
                 </div>
 
@@ -101,12 +103,12 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
                     <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path>
                     <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
                   </svg>
-                  使用 Google 继续
+                  {t("auth.google")}
                 </button>
 
                 <div className="relative flex items-center py-2 pointer-events-none">
                   <div className="flex-grow border-t border-border/60"></div>
-                  <span className="flex-shrink-0 mx-4 text-xs text-muted-foreground font-semibold uppercase tracking-wider">或</span>
+                  <span className="flex-shrink-0 mx-4 text-xs text-muted-foreground font-semibold uppercase tracking-wider">{t("auth.or")}</span>
                   <div className="flex-grow border-t border-border/60"></div>
                 </div>
 
@@ -114,36 +116,36 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
                   <div className="space-y-3.5">
                     {!isLogin && (
                       <div className="space-y-1.5 flex flex-col">
-                        <label className="text-[13px] font-semibold text-foreground/80 px-1 select-none">姓名</label>
+                        <label className="text-[13px] font-semibold text-foreground/80 px-1 select-none">{t("auth.name")}</label>
                         <input 
                           className="flex h-[42px] sm:h-[46px] w-full rounded-xl border border-input bg-secondary/20 px-4 text-[14px] sm:text-[15px] transition-all focus:bg-card focus:outline-none focus:ring-2 focus:ring-[#a4c639]/30 focus:border-[#a4c639] hover:border-border placeholder:text-muted-foreground/50 relative z-30"
-                          placeholder="你的姓名"
+                          placeholder={t("auth.name.placeholder")}
                         />
                       </div>
                     )}
                     <div className="space-y-1.5 flex flex-col">
-                      <label className="text-[13px] font-semibold text-foreground/80 px-1 select-none">邮箱</label>
+                      <label className="text-[13px] font-semibold text-foreground/80 px-1 select-none">{t("auth.email")}</label>
                       <input 
                         type="email"
                         className="flex h-[42px] sm:h-[46px] w-full rounded-xl border border-input bg-secondary/20 px-4 text-[14px] sm:text-[15px] transition-all focus:bg-card focus:outline-none focus:ring-2 focus:ring-[#a4c639]/30 focus:border-[#a4c639] hover:border-border placeholder:text-muted-foreground/50 relative z-30"
-                        placeholder="you@example.com"
+                        placeholder={t("auth.email.placeholder")}
                       />
                     </div>
                     <div className="space-y-1.5 flex flex-col">
-                      <label className="text-[13px] font-semibold text-foreground/80 px-1 select-none">密码</label>
+                      <label className="text-[13px] font-semibold text-foreground/80 px-1 select-none">{t("auth.password")}</label>
                       <input 
                         type="password"
                         className="flex h-[42px] sm:h-[46px] w-full rounded-xl border border-input bg-secondary/20 px-4 text-[14px] sm:text-[15px] transition-all focus:bg-card focus:outline-none focus:ring-2 focus:ring-[#a4c639]/30 focus:border-[#a4c639] hover:border-border placeholder:text-muted-foreground/50 relative z-30"
-                        placeholder={isLogin ? "输入密码" : "创建密码"}
+                        placeholder={isLogin ? t("auth.password.login") : t("auth.password.create")}
                       />
                     </div>
                     {!isLogin && (
                       <div className="space-y-1.5 flex flex-col">
-                        <label className="text-[13px] font-semibold text-foreground/80 px-1 select-none">确认密码</label>
+                        <label className="text-[13px] font-semibold text-foreground/80 px-1 select-none">{t("auth.password.confirm")}</label>
                         <input 
                           type="password"
                           className="flex h-[42px] sm:h-[46px] w-full rounded-xl border border-input bg-secondary/20 px-4 text-[14px] sm:text-[15px] transition-all focus:bg-card focus:outline-none focus:ring-2 focus:ring-[#a4c639]/30 focus:border-[#a4c639] hover:border-border placeholder:text-muted-foreground/50 relative z-30"
-                          placeholder="再次输入密码"
+                          placeholder={t("auth.password.confirm.placeholder")}
                         />
                       </div>
                     )}
@@ -158,7 +160,7 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
                           className="size-4 shrink-0 rounded-[4px] border-border text-[#a4c639] focus:ring-[#a4c639]/30 transition-colors relative z-30 cursor-pointer"
                         />
                         <label htmlFor="terms" className="text-[13px] font-medium text-muted-foreground/90 select-none cursor-pointer relative z-30">
-                          我同意 <a href="#terms" className="text-[#a4c639] hover:underline" onClick={(e) => e.stopPropagation()}>服务条款</a> 和 <a href="#privacy" className="text-[#a4c639] hover:underline" onClick={(e) => e.stopPropagation()}>隐私政策</a>
+                          {t("auth.terms.agree")} <a href="#terms" className="text-[#a4c639] hover:underline" onClick={(e) => e.stopPropagation()}>{t("auth.terms")}</a> {t("auth.and")} <a href="#privacy" className="text-[#a4c639] hover:underline" onClick={(e) => e.stopPropagation()}>{t("auth.privacy")}</a>
                         </label>
                       </div>
 
@@ -178,7 +180,7 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
                             {verified ? <Check className="size-3.5" strokeWidth={3.5} /> : (isVerifying && <RefreshCcw className="size-3 text-muted-foreground animate-spin" />)}
                           </div>
                           <span className={`text-[14.5px] font-semibold transition-colors ${verified ? 'text-[#1a1a1a]' : 'text-muted-foreground'}`}>
-                            {isVerifying ? '验证中...' : (verified ? '已验证' : '点击验证')}
+                            {isVerifying ? t("auth.verify.ing") : (verified ? t("auth.verify.ed") : t("auth.verify.click"))}
                           </span>
                         </div>
                         <RefreshCcw className={`size-[18px] transition-all duration-700 relative z-10 ${verified ? 'text-[#1a1a1a]/50' : 'text-muted-foreground group-hover:text-foreground opacity-30 group-hover:opacity-80'} ${isVerifying ? 'animate-spin opacity-50' : ''}`} />
@@ -187,12 +189,12 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
                   )}
 
                   <button type="submit" className="mt-4 flex items-center justify-center rounded-xl text-[15px] font-bold bg-[#a4c639] text-[#1a1a1a] hover:bg-[#b5d54a] h-12 w-full shadow-sm transition-all active:scale-[0.98] relative z-30 cursor-pointer">
-                    {isLogin ? "登录" : "邮箱注册"}
+                    {isLogin ? t("auth.btn.login") : t("auth.btn.register")}
                   </button>
                 </form>
 
                 <div className="text-center text-[14px] font-medium text-muted-foreground mb-2 mt-1 relative z-30">
-                  {isLogin ? "没有账户？ " : "已有账户？ "} 
+                  {isLogin ? t("auth.no_account") : t("auth.has_account")} 
                   <button 
                     onClick={() => {
                       setIsLogin(!isLogin);
@@ -200,7 +202,7 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
                     }}
                     className="text-foreground font-semibold hover:text-[#a4c639] transition-colors focus:outline-none ml-1 underline underline-offset-4 decoration-border hover:decoration-[#a4c639] cursor-pointer"
                   >
-                    {isLogin ? "创建账户" : "登录"}
+                    {isLogin ? t("auth.create") : t("auth.btn.login")}
                   </button>
                 </div>
               </div>

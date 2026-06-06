@@ -2,6 +2,7 @@ import { cn } from "../lib/utils";
 import { MessageSquare, Heart, Share2, Users, Monitor, Bot } from "lucide-react";
 import React from "react";
 import { FollowCursorCard } from "./FollowCursorCard";
+import { useThemeLanguage } from "../contexts/ThemeLanguageContext";
 
 // Mocks
 const ScenarioWebCompanion = () => (
@@ -46,10 +47,10 @@ const ScenarioVtuber = () => (
     </div>
 );
 
-const ScenarioGroupChat = () => (
+const ScenarioGroupChat = ({ title }: { title: string }) => (
     <div className="flex flex-col h-[260px] bg-background border-b border-border overflow-hidden">
         <div className="p-3 bg-secondary border-b border-border text-xs font-semibold text-center text-foreground">
-            读书会 (4)
+            {title}
         </div>
         <div className="p-4 flex flex-col gap-3 flex-1 overflow-hidden">
             <div className="flex gap-2">
@@ -94,37 +95,39 @@ const ScenarioDesktopPet = () => (
     </div>
 );
 
-const scenarios = [
-  {
-    title: "网页伴侣（AI 灵魂）",
-    desc: "理解当前网页的上下文，并实时和你探讨内容。",
-    visual: <ScenarioWebCompanion />
-  },
-  {
-    title: "AI VTuber",
-    desc: "读取直播弹幕、处理打赏并保持人设互动。",
-    visual: <ScenarioVtuber />
-  },
-  {
-    title: "多人群聊",
-    desc: "与多个真实人类朋友在同一个群里共存、交流。",
-    visual: <ScenarioGroupChat />
-  },
-  {
-    title: "桌面宠物",
-    desc: "拥有透明毛玻璃质感的常驻贴心陪伴。",
-    visual: <ScenarioDesktopPet />
-  }
-];
-
 export function ScenariosMarquee() {
+    const { t } = useThemeLanguage();
+
+    const scenarios = [
+      {
+        title: t("scen.1.t"),
+        desc: t("scen.1.d"),
+        visual: <ScenarioWebCompanion />
+      },
+      {
+        title: t("scen.2.t"),
+        desc: t("scen.2.d"),
+        visual: <ScenarioVtuber />
+      },
+      {
+        title: t("scen.3.t"),
+        desc: t("scen.3.d"),
+        visual: <ScenarioGroupChat title={t("scen.r1")} />
+      },
+      {
+        title: t("scen.4.t"),
+        desc: t("scen.4.d"),
+        visual: <ScenarioDesktopPet />
+      }
+    ];
+
     return (
-        <section id="scenarios" className="py-32 md:py-48 overflow-hidden bg-[#fafafa] border-y border-border">
+        <section id="scenarios" className="py-32 md:py-48 overflow-hidden bg-[#fafafa] border-y border-border dark:bg-background">
             <div className="text-center mb-16 px-4">
                 <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-foreground">
-                    你想创造<span className="text-muted-foreground font-normal">什么？</span>
+                    {t("scen.title")}<span className="text-muted-foreground font-normal">{t("scen.title2")}</span>
                 </h2>
-                <p className="text-muted-foreground text-lg">四种 AnySoul 的核心使用方式</p>
+                <p className="text-muted-foreground text-lg">{t("scen.subtitle")}</p>
             </div>
             
             <div className="relative flex w-full items-center">
@@ -148,8 +151,8 @@ export function ScenariosMarquee() {
                 </div>
 
                 {/* Edges mask */}
-                <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#fafafa] to-transparent z-10" />
-                <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#fafafa] to-transparent z-10" />
+                <div className="pointer-events-none absolute inset-y-0 left-0 w-12 md:w-32 bg-gradient-to-r from-[#fafafa] dark:from-background to-transparent z-10" />
+                <div className="pointer-events-none absolute inset-y-0 right-0 w-12 md:w-32 bg-gradient-to-l from-[#fafafa] dark:from-background to-transparent z-10" />
             </div>
         </section>
     )

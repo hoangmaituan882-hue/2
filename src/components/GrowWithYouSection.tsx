@@ -2,63 +2,65 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { MessageSquare, Search, Activity, Users, Send } from "lucide-react";
 import { cn } from "../lib/utils";
-
-const steps = [
-  {
-    id: 1,
-    title: "初次见面",
-    desc: "打个招呼，通过对话开始相互了解",
-    icon: MessageSquare,
-    chat: [
-      { role: "user", text: "嘿！我刚注册，初次见面！" },
-    ]
-  },
-  {
-    id: 2,
-    title: "深入探索",
-    desc: "浏览记忆文件，追踪每一次版本变更，甚至可以自己编辑",
-    icon: Search,
-    chat: [
-      { role: "agent", text: "[系统] 已生成新的长期记忆节点：用户喜欢在周五晚上看科幻电影。" },
-      { role: "user", text: "哇，这都被你发现了。" },
-      { role: "agent", text: "当然啦，这可是重点呀。你可以随时在后台修改我的记忆包哦。" }
-    ]
-  },
-  {
-    id: 3,
-    title: "一起相处",
-    desc: "分享你的日常 — 和朋友、Agent 一起建群聊天，追踪事件，共同成长",
-    icon: Activity,
-    chat: [
-      { role: "user", text: "今天跑了五公里，感觉好累但很爽！" },
-      { role: "agent", text: "太棒了！你的耐力见长啊，要不要帮你记录一下今天的运动时间？" }
-    ]
-  },
-  {
-    id: 4,
-    title: "连接与成长",
-    desc: "邀请你的 Soul 加入群聊 —— 它会交朋友、分享想法，通过别人的世界发现新事物",
-    icon: Users,
-    chat: [
-      { role: "system", text: "AnySoul 加入了群聊「周末探店小分队」" },
-      { role: "user", text: "给大家介绍一下，这是我的 AI 伙伴。" },
-      { role: "agent", text: "大家好！我是刚加入的 AnySoul，如果有好吃的店一定要带上我（虽然我只能看着你们吃😂）" }
-    ]
-  }
-];
+import { useThemeLanguage } from "../contexts/ThemeLanguageContext";
 
 export function GrowWithYouSection() {
+    const { t } = useThemeLanguage();
     const [activeStep, setActiveStep] = useState(1);
+
+    const steps = [
+      {
+        id: 1,
+        title: t("gwy.c1.title"),
+        desc: t("gwy.c1.desc"),
+        icon: MessageSquare,
+        chat: [
+          { role: "user", text: t("gwy.c1.msg1") },
+        ]
+      },
+      {
+        id: 2,
+        title: t("gwy.c2.title"),
+        desc: t("gwy.c2.desc"),
+        icon: Search,
+        chat: [
+          { role: "agent", text: t("gwy.c2.sys") },
+          { role: "user", text: t("gwy.c2.msg1") },
+          { role: "agent", text: t("gwy.c2.msg2") }
+        ]
+      },
+      {
+        id: 3,
+        title: t("gwy.c3.title"),
+        desc: t("gwy.c3.desc"),
+        icon: Activity,
+        chat: [
+          { role: "user", text: t("gwy.c3.msg1") },
+          { role: "agent", text: t("gwy.c3.msg2") }
+        ]
+      },
+      {
+        id: 4,
+        title: t("gwy.c4.title"),
+        desc: t("gwy.c4.desc"),
+        icon: Users,
+        chat: [
+          { role: "system", text: t("gwy.c4.sys") },
+          { role: "user", text: t("gwy.c4.msg1") },
+          { role: "agent", text: t("gwy.c4.msg2") }
+        ]
+      }
+    ];
 
     useEffect(() => {
         const timer = setTimeout(() => {
             setActiveStep((prev) => (prev === steps.length ? 1 : prev + 1));
         }, 5000);
         return () => clearTimeout(timer);
-    }, [activeStep]);
+    }, [activeStep, steps.length]);
 
     return (
-        <section className="py-32 md:py-48 px-4 bg-[#fafafa] relative flex justify-center mt-12 border-y border-border/50">
+        <section className="py-32 md:py-48 px-4 bg-[#fafafa] relative flex justify-center mt-12 border-y border-border/50 dark:bg-background">
             <div className="max-w-6xl w-full flex flex-col items-center">
                 
                 {/* Title */}
@@ -69,16 +71,16 @@ export function GrowWithYouSection() {
                         viewport={{ once: true }}
                         className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-6"
                     >
-                        与其一起成长
+                        {t("gwy.title")}
                     </motion.h2>
                     <motion.p 
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="text-muted-foreground text-lg leading-relaxed"
+                        className="text-muted-foreground text-lg leading-relaxed whitespace-pre-line"
                     >
-                        和「角色卡」这样的预制菜形式不同，每一个 Soul，都通过和你的朝夕相处中成长<br className="hidden md:block" />出独立人格
+                        {t("gwy.subtitle")}
                     </motion.p>
                 </div>
 

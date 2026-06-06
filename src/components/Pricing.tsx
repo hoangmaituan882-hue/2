@@ -1,44 +1,47 @@
 import { cn } from "../lib/utils";
 import { Check } from "lucide-react";
 import { motion } from "motion/react";
-
-const plans = [
-  {
-    name: "Starter",
-    price: "Free",
-    description: "Perfect for exploring and small hobby projects.",
-    features: ["1,000 queries / month", "Standard models", "Community support", "1 Custom Agent"],
-    cta: "Get Started",
-    popular: false,
-  },
-  {
-    name: "Pulse",
-    price: "$29",
-    period: "/mo",
-    description: "For professionals building production applications.",
-    features: ["50,000 queries / month", "Advanced models (GPT-4, Claude 3)", "Priority email support", "Unlimited Agents", "Custom integrations"],
-    cta: "Start Free Trial",
-    popular: true,
-  },
-  {
-    name: "Enterprise",
-    price: "Custom",
-    description: "Dedicated infrastructure and advanced security.",
-    features: ["Unlimited queries", "Custom model fine-tuning", "24/7 Phone support", "SOC2 & HIPAA Compliance", "Dedicated Technical Account Manager"],
-    cta: "Contact Sales",
-    popular: false,
-  },
-];
+import { useThemeLanguage } from "../contexts/ThemeLanguageContext";
 
 export function Pricing() {
+  const { t } = useThemeLanguage();
+
+  const plans = [
+    {
+      name: t("pr.1.name"),
+      price: t("pr.1.price"),
+      description: t("pr.1.desc"),
+      features: [t("pr.1.f1"), t("pr.1.f2"), t("pr.1.f3"), t("pr.1.f4")],
+      cta: t("pr.1.cta"),
+      popular: false,
+    },
+    {
+      name: t("pr.2.name"),
+      price: t("pr.2.price"),
+      period: t("pr.2.period"),
+      description: t("pr.2.desc"),
+      features: [t("pr.2.f1"), t("pr.2.f2"), t("pr.2.f3"), t("pr.2.f4"), t("pr.2.f5")],
+      cta: t("pr.2.cta"),
+      popular: true,
+    },
+    {
+      name: t("pr.3.name"),
+      price: t("pr.3.price"),
+      description: t("pr.3.desc"),
+      features: [t("pr.3.f1"), t("pr.3.f2"), t("pr.3.f3"), t("pr.3.f4"), t("pr.3.f5")],
+      cta: t("pr.3.cta"),
+      popular: false,
+    },
+  ];
+
   return (
     <section id="pricing" className="py-32 md:py-48 px-4 w-full max-w-7xl mx-auto">
       <div className="mb-20 text-center">
         <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-foreground">
-          Simple, Transparent <span className="text-muted-foreground font-normal">Pricing</span>
+          {t("pr.title")}<span className="text-muted-foreground font-normal">{t("pr.title2")}</span>
         </h2>
         <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-          Scale effortlessly from prototype to enterprise without hidden fees.
+          {t("pr.subtitle")}
         </p>
       </div>
 
@@ -56,8 +59,8 @@ export function Pricing() {
             )}
           >
             {plan.popular && (
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1.5 text-xs font-bold text-primary-foreground shadow-sm uppercase tracking-widest">
-                Most Popular
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1.5 text-xs font-bold text-primary-foreground shadow-sm uppercase tracking-widest whitespace-nowrap">
+                {t("pr.2.pop")}
               </div>
             )}
             

@@ -42,7 +42,7 @@
 
 @layer base {
   :root {
-    --background: #ffffff;
+    --background: #fbfaf8;
     --foreground: #0a0a0a;
     --card: #ffffff;
     --card-foreground: #0a0a0a;

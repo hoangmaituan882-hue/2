@@ -40,7 +40,7 @@ export function FollowCursorCard({
        onMouseMove={handleMouseMove}
        variants={variants}
        className={cn(
-         "relative overflow-hidden flex flex-col rounded-[2rem] bg-card border-2 border-border shadow-[0_4px_20px_rgb(0,0,0,0.03)] transition-all duration-500 hover:border-primary/50 hover:shadow-[0_0_15px_rgba(134,158,113,0.3)] hover:-translate-y-1 group hover:cursor-none",
+         "relative overflow-hidden flex flex-col rounded-2xl bg-card border-[4px] border-[#E5E5E5] shadow-[0_4px_20px_rgb(0,0,0,0.03)] transition-all duration-500 hover:border-[#b4c053] hover:shadow-[0_0_15px_rgba(180,192,83,0.3)] hover:-translate-y-1 group hover:cursor-none",
          className
        )}
     >

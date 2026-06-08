@@ -3,6 +3,7 @@ import { cn } from "../lib/utils";
 import { Menu, ChevronDown, Moon, Sun, Languages, User, Compass, Newspaper, Gamepad2, Video } from "lucide-react";
 import { motion } from "motion/react";
 import { useThemeLanguage } from "../contexts/ThemeLanguageContext";
+import { useAuth } from "../contexts/AuthContext";
 import { AuthModal } from "./AuthModal";
 import { VHSModal } from "./vhs/VHSModal";
 
@@ -10,8 +11,8 @@ export function Header({ isWorkspace, isGames }: { isWorkspace?: boolean; isGame
   const [isScrolled, setIsScrolled] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isVHSModalOpen, setIsVHSModalOpen] = useState(false);
-  const [pendingWorkspace, setPendingWorkspace] = useState(false);
   const { theme, toggleTheme, setTheme, language, toggleLanguage, setLanguage, t } = useThemeLanguage();
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,17 +24,14 @@ export function Header({ isWorkspace, isGames }: { isWorkspace?: boolean; isGame
 
   const handleWorkspaceClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    setPendingWorkspace(true);
-    setIsAuthModalOpen(true);
+    window.location.hash = "#workspace";
   };
 
   const handleAuthModalClose = () => {
     setIsAuthModalOpen(false);
-    if (pendingWorkspace) {
-      window.location.hash = "#workspace";
-      setPendingWorkspace(false);
-    }
   };
+
+  const roleLabel = user?.role === "owner" ? "站主" : user?.role === "admin" ? "管理员" : "普通用户";
 
   if (isWorkspace) {
     return null;
@@ -124,6 +122,13 @@ export function Header({ isWorkspace, isGames }: { isWorkspace?: boolean; isGame
              <span>{t("header.screening")}</span>
           </a>
 
+          <a href="#posts" className={cn("inline-flex items-center gap-1.5 h-[36px] px-4 rounded-full border transition-all duration-300 font-bold text-sm text-foreground ml-0.5",
+            isScrolled ? "border-border bg-card hover:bg-muted shadow-[0_2px_10px_rgb(0,0,0,0.02)]" : "border-transparent bg-transparent hover:bg-black/5 dark:hover:bg-white/5 shadow-none"
+          )}>
+             <Newspaper className="size-4" />
+             <span>文章</span>
+          </a>
+
           <a href="#plaza" className={cn("inline-flex items-center gap-1.5 h-[36px] px-4 rounded-full border transition-all duration-300 font-bold text-sm text-foreground ml-0.5", 
             isScrolled ? "border-border bg-card hover:bg-muted shadow-[0_2px_10px_rgb(0,0,0,0.02)]" : "border-transparent bg-transparent hover:bg-black/5 dark:hover:bg-white/5 shadow-none"
           )}>
@@ -141,6 +146,15 @@ export function Header({ isWorkspace, isGames }: { isWorkspace?: boolean; isGame
           <button onClick={handleWorkspaceClick} className="ml-1 inline-flex items-center justify-center h-[36px] px-5 rounded-full bg-[#abc378] text-[#1a1a1a] hover:bg-[#a0b86e] hover:shadow-md transition-all font-bold text-sm shadow-sm tracking-wide cursor-pointer">
              {t("header.workspace")}
           </button>
+          {user ? (
+            <button onClick={logout} className="ml-1 inline-flex items-center justify-center h-[36px] px-4 rounded-full border border-border bg-card text-foreground hover:bg-muted transition-all font-bold text-sm shadow-sm">
+              {user.name} · {roleLabel} / 退出
+            </button>
+          ) : (
+            <button onClick={() => setIsAuthModalOpen(true)} className="ml-1 inline-flex items-center justify-center h-[36px] px-4 rounded-full border border-border bg-card text-foreground hover:bg-muted transition-all font-bold text-sm shadow-sm">
+              {t("header.login")}
+            </button>
+          )}
         </nav>
 
         {/* Mobile Navigation */}
@@ -154,8 +168,14 @@ export function Header({ isWorkspace, isGames }: { isWorkspace?: boolean; isGame
           <button onClick={() => setIsVHSModalOpen(true)} className="flex-shrink-0 inline-flex items-center justify-center size-8 sm:size-9 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-foreground">
              <Video className="size-4" strokeWidth={2} />
           </button>
+          <a href="#posts" className="flex-shrink-0 inline-flex items-center justify-center size-8 sm:size-9 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-foreground" title="文章">
+             <Newspaper className="size-4" strokeWidth={2} />
+          </a>
           <button onClick={handleWorkspaceClick} className="ml-0.5 sm:ml-1 flex-shrink-0 transform-none select-none whitespace-nowrap inline-flex items-center justify-center h-[32px] sm:h-[36px] px-2.5 sm:px-4 rounded-full bg-[#abc378] text-[#1a1a1a] hover:bg-[#a0b86e] hover:shadow-md transition-all font-bold text-xs sm:text-sm shadow-sm tracking-wide cursor-pointer">
              {t("header.workspace")}
+          </button>
+          <button onClick={() => user ? logout() : setIsAuthModalOpen(true)} className="flex-shrink-0 inline-flex items-center justify-center h-[32px] sm:h-[36px] px-2.5 rounded-full border border-border bg-card text-[11px] font-bold text-foreground">
+             {user ? "退出" : t("header.login")}
           </button>
         </nav>
       </div>

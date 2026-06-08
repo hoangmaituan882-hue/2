@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { useThemeLanguage } from "../contexts/ThemeLanguageContext";
 
 export interface Soul {
-  id: number;
+  id: number | string;
   name: string;
   author: string;
   tags: string[];
@@ -16,10 +16,12 @@ export interface Soul {
   avatarInitials?: string;
   bannerColor: string;
   featured: boolean;
+  visibility?: string;
   desc?: string;
 }
 
 interface SoulImageCardProps {
+  key?: number | string;
   soul: Soul;
   infoFilter: string;
 }

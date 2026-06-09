@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Play, FileText, Search, Users, Heart, Bot, Tag, List, MessageSquare, Sparkles, Clock, Eye, MessageCircle, ArrowDownUp, GripVertical, ChevronLeft, ChevronRight, X, Star, Zap, Quote, Lightbulb } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { cn } from "../lib/utils";
+import { cn } from "../../lib/utils";
 
 function AccordionSection({ title, icon, defaultOpen = true, children, colorClass, bgClass, headerAddon, className }: any) {
   const [isOpen, setIsOpen] = useState(defaultOpen);

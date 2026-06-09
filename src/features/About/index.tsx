@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { cn } from "../lib/utils";
+import { cn } from "../../lib/utils";
 import { Sparkles } from "lucide-react";
 
 const aboutData = [

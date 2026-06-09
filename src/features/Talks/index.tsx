@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect, useMemo } from "react";
-import { useThemeLanguage } from "../contexts/ThemeLanguageContext";
+import { useThemeLanguage } from "../../contexts/ThemeLanguageContext";
 import { Play, FileText, ArrowUpRight, Search, FileDown, Plus, Calendar, Folder, Archive, X, Clock, Users, Heart, Bot, Tag, List, MessageSquare, Sparkles, Filter, Eye, MessageCircle, ArrowDownUp } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { cn } from "../lib/utils";
-import { TalkModal } from "../components/TalkModal";
-import { TopicsModal } from "../components/TopicsModal";
+import { cn } from "../../lib/utils";
+import { TalkModal } from "./TalkModal";
+import { TopicsModal } from "./TopicsModal";
 
 function WaveScrollbar({ scrollRef, schedules }: { scrollRef: React.RefObject<HTMLDivElement>, schedules?: any[] }) {
   const trackRef = useRef<HTMLDivElement>(null);

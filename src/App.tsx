@@ -17,12 +17,12 @@ import { Changelog } from "./pages/Changelog"
 import { Plaza } from "./pages/Plaza"
 import { Screenings } from "./pages/Screenings"
 import { Workspace } from "./pages/Workspace"
-import { About } from "./pages/About"
+import { About } from "./features/About"
 import { Gaming } from "./pages/Gaming"
 
 import { ThemeLanguageProvider } from "./contexts/ThemeLanguageContext"
 
-import { Talks } from "./pages/Talks"
+import { Talks } from "./features/Talks"
 
 export default function App() {
   const [route, setRoute] = useState(window.location.hash);

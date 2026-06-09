@@ -2,31 +2,9 @@ import { cn } from "../lib/utils";
 import { ArrowRight, Bot, Command, Sparkles } from "lucide-react";
 import { motion } from "motion/react";
 import { useThemeLanguage } from "../contexts/ThemeLanguageContext";
-import { useContent } from "../content/useContent";
-import type { HomeHeroContent } from "../content/types";
 
 export function Hero() {
   const { t } = useThemeLanguage();
-  const hero = useContent<HomeHeroContent>("home.hero.main", {
-    badge: t("hero.badge"),
-    titlePrefix: t("hero.title.prefix"),
-    highlight1: t("hero.title.highlight1"),
-    highlight2: t("hero.title.highlight2"),
-    subtitle: t("hero.subtitle"),
-    browserTitle: t("hero.browser.title"),
-    browserStatus1: t("hero.browser.status1"),
-    browserStatus2: t("hero.browser.status2"),
-    chatMsg1: t("hero.chat.msg1"),
-    chatMsg2: t("hero.chat.msg2"),
-    chatMsg3: t("hero.chat.msg3"),
-    chatThinking: t("hero.chat.thinking"),
-    eventsTitle: t("hero.events.title"),
-    events: [t("hero.events.1"), t("hero.events.2"), t("hero.events.3")],
-    activityTitle: t("hero.activity.title"),
-    activityMemory: t("hero.activity.memory"),
-    activityItem1: t("hero.activity.item1"),
-    activityItem1Desc: t("hero.activity.item1.desc")
-  });
   
   const draw = {
     hidden: (custom: { color: string }) => ({ pathLength: 0, opacity: 0, stroke: custom.color }),
@@ -93,7 +71,7 @@ export function Hero() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-500 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-orange-500"></span>
             </span>
-            <span className="text-[12px] font-semibold text-foreground transition-colors group-hover:text-primary">{hero.badge}</span>
+            <span className="text-[12px] font-semibold text-foreground transition-colors group-hover:text-primary">{t("hero.badge")}</span>
             <ArrowRight className="size-3.5 text-muted-foreground group-hover:text-primary transition-colors group-hover:translate-x-0.5" />
           </a>
         </motion.div>
@@ -104,7 +82,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.6, delay: 2.2, ease: "easeOut" }}
         >
-          {hero.titlePrefix}
+          {t("hero.title.prefix")}
         </motion.h1>
 
         <div className="relative flex justify-center items-center py-4 w-full h-[120px] md:h-[160px]">
@@ -162,8 +140,8 @@ export function Hero() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.6, delay: 2.4, ease: "easeOut" }}
           >
-            <span className="text-[#a4c639]">{hero.highlight1}</span>
-            <span className="text-[#ea4c89]">{hero.highlight2}</span>
+            <span className="text-[#a4c639]">{t("hero.title.highlight1")}</span>
+            <span className="text-[#ea4c89]">{t("hero.title.highlight2")}</span>
           </motion.h2>
         </div>
 
@@ -173,7 +151,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 2.6, ease: "easeOut" }}
         >
-          {hero.subtitle}
+          {t("hero.subtitle")}
         </motion.p>
       </div>
 
@@ -190,11 +168,11 @@ export function Hero() {
               <div className="size-3 rounded-full bg-[#27c93f]" />
             </div>
             <div className="mx-auto flex items-center justify-center text-[13px] text-muted-foreground">
-              {hero.browserTitle}
+              {t("hero.browser.title")}
             </div>
             <div className="flex items-center gap-1.5 text-[12px] text-muted-foreground mr-2">
               <div className="size-2 rounded-full bg-[#27c93f]" />
-              {hero.browserStatus1}
+              {t("hero.browser.status1")}
             </div>
           </div>
           
@@ -213,7 +191,7 @@ export function Hero() {
                     <span className="font-semibold text-sm">AnySoul</span>
                  </div>
                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <div className="size-1.5 rounded-full bg-[#27c93f]" /> {hero.browserStatus2}
+                    <div className="size-1.5 rounded-full bg-[#27c93f]" /> {t("hero.browser.status2")}
                  </div>
                </div>
                
@@ -221,27 +199,27 @@ export function Hero() {
                  {/* User bubble */}
                  <div className="flex justify-end">
                    <div className="bg-[#cfdb7d] text-[#1a1a1a] p-3 px-4 rounded-2xl rounded-tr-sm text-[13px] max-w-[85%] shadow-sm">
-                      {hero.chatMsg1}
+                     {t("hero.chat.msg1")}
                    </div>
                  </div>
                  
                  {/* Bot bubble */}
                  <div className="flex justify-start relative group">
                    <div className="bg-white dark:bg-[#333] border border-border/60 p-3 px-4 rounded-2xl rounded-tl-sm text-[13px] max-w-[90%] shadow-sm leading-relaxed">
-                      {hero.chatMsg2}
+                     {t("hero.chat.msg2")}
                    </div>
                  </div>
 
                  {/* User bubble */}
                  <div className="flex justify-end">
                    <div className="bg-[#cfdb7d] text-[#1a1a1a] p-3 px-4 rounded-2xl rounded-tr-sm text-[13px] max-w-[85%] shadow-sm">
-                      {hero.chatMsg3}
+                     {t("hero.chat.msg3")}
                    </div>
                  </div>
 
                  {/* Thinking state */}
                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground mt-2 px-1">
-                    <span className="animate-spin duration-3000">↻</span> {hero.chatThinking}
+                   <span className="animate-spin duration-3000">↻</span> {t("hero.chat.thinking")}
                  </div>
                </div>
 
@@ -272,20 +250,20 @@ export function Hero() {
             <div className="flex-[3] min-h-[280px] md:min-h-0 flex flex-col gap-4">
               <div className="h-[280px] bg-white dark:bg-[#222] border border-border/40 rounded-xl overflow-hidden shadow-sm flex flex-col">
                 <div className="h-10 border-b border-border/40 flex items-center px-4 shrink-0 text-sm font-semibold gap-1.5">
-                  <span className="text-[16px]">⚡️</span> {hero.eventsTitle}
+                  <span className="text-[16px]">⚡️</span> {t("hero.events.title")}
                 </div>
                 <div className="p-4 flex flex-col gap-3 text-[13px] text-muted-foreground/80">
                   <div className="flex items-center gap-2">
                     <div className="size-1 rounded-full bg-border" />
-                    {hero.events[0]}
+                    {t("hero.events.1")}
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="size-1 rounded-full bg-border" />
-                    {hero.events[1]}
+                    {t("hero.events.2")}
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="size-1 rounded-full bg-border" />
-                    {hero.events[2]}
+                    {t("hero.events.3")}
                   </div>
                 </div>
               </div>
@@ -297,8 +275,8 @@ export function Hero() {
             {/* Column 3: Activity & Memory */}
             <div className="flex-[4] min-h-[200px] md:min-h-0 bg-white dark:bg-[#222] border border-border/40 rounded-xl overflow-hidden shadow-sm flex flex-col relative">
                <div className="h-10 border-b border-border/40 flex items-center px-4 shrink-0 text-[13px] gap-4">
-                  <div className="font-semibold text-[#a4c639] h-full flex items-center border-b-2 border-[#a4c639] cursor-pointer">{hero.activityTitle}</div>
-                  <div className="text-muted-foreground cursor-pointer hover:text-foreground">{hero.activityMemory}</div>
+                 <div className="font-semibold text-[#a4c639] h-full flex items-center border-b-2 border-[#a4c639] cursor-pointer">{t("hero.activity.title")}</div>
+                 <div className="text-muted-foreground cursor-pointer hover:text-foreground">{t("hero.activity.memory")}</div>
                </div>
                
                <div className="p-4 flex flex-col gap-3">
@@ -307,8 +285,8 @@ export function Hero() {
                      <svg className="size-4 text-purple-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
                    </div>
                    <div className="flex flex-col gap-1">
-                      <div className="text-[13px] font-medium">{hero.activityItem1}</div>
-                      <div className="text-[12px] text-muted-foreground">{hero.activityItem1Desc}</div>
+                     <div className="text-[13px] font-medium">{t("hero.activity.item1")}</div>
+                     <div className="text-[12px] text-muted-foreground">{t("hero.activity.item1.desc")}</div>
                    </div>
                  </div>
                </div>

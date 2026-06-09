@@ -1,10 +1,11 @@
+import React from "react";
 import { Heart, Eye, Crown, HeartPulse, Clock } from "lucide-react";
 import { cn } from "../lib/utils";
 import { motion, AnimatePresence } from "motion/react";
 import { useThemeLanguage } from "../contexts/ThemeLanguageContext";
 
 export interface Soul {
-  id: number | string;
+  id: number;
   name: string;
   author: string;
   tags: string[];
@@ -16,14 +17,13 @@ export interface Soul {
   avatarInitials?: string;
   bannerColor: string;
   featured: boolean;
-  visibility?: string;
   desc?: string;
 }
 
-interface SoulImageCardProps {
-  key?: number | string;
+export interface SoulImageCardProps {
   soul: Soul;
   infoFilter: string;
+  key?: React.Key;
 }
 
 export function SoulImageCard({ soul, infoFilter }: SoulImageCardProps) {

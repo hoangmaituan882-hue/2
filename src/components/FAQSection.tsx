@@ -3,40 +3,35 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ChevronDown, BookOpen, ArrowRight } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { useThemeLanguage } from '../contexts/ThemeLanguageContext';
-import { useContent } from '../content/useContent';
-import type { FaqContent } from '../content/types';
 
 export function FAQSection() {
   const { t } = useThemeLanguage();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const faqContent = useContent<FaqContent>("home.faq.items", {
-    title: t("faq.title"),
-    items: [
-      {
-        question: t("faq.q1"),
-        answer: t("faq.a1")
-      },
-      {
-        question: t("faq.q2"),
-        answer: t("faq.a2")
-      },
-      {
-        question: t("faq.q3"),
-        answer: t("faq.a3")
-      }
-    ]
-  });
+  const faqs = [
+    {
+      question: t("faq.q1"),
+      answer: t("faq.a1")
+    },
+    {
+      question: t("faq.q2"),
+      answer: t("faq.a2")
+    },
+    {
+      question: t("faq.q3"),
+      answer: t("faq.a3")
+    }
+  ];
 
   return (
     <section className="py-24 md:py-32 px-4 bg-background">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-5xl font-black tracking-tight text-center mb-16 text-foreground">{faqContent.title}</h2>
+        <h2 className="text-3xl md:text-5xl font-black tracking-tight text-center mb-16 text-foreground">{t("faq.title")}</h2>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
           {/* Left Column: Accordion */}
           <div className="flex flex-col gap-4">
-            {faqContent.items.map((faq, idx) => (
+            {faqs.map((faq, idx) => (
               <div 
                 key={idx}
                 className="border-[4px] border-[#e5e5e5] rounded-2xl bg-card px-8 relative group transition-colors duration-500 hover:border-[#b4c053] dark:border-border dark:hover:border-primary"

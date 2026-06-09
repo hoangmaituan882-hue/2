@@ -5,19 +5,155 @@ import { useThemeLanguage } from "../contexts/ThemeLanguageContext";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { motion, AnimatePresence } from "motion/react";
 import { SoulImageCard, Soul } from "../components/SoulImageCard";
-import { useContent } from "../content/useContent";
-import { defaultPlazaContent } from "../content/defaults/plaza";
-import type { PlazaContent, PlazaSoulItem } from "../content/types";
 
-const visibleSoul = (soul: PlazaSoulItem) => soul.visibility === "visible";
+const SOULS_DATA = [
+  {
+    id: 1,
+    name: "庄方宜",
+    author: "Doodle Bear",
+    tags: ["终末地", "endfield", "小庄"],
+    likes: 2,
+    createdAt: "2024-05-12",
+    views: 58,
+    activeDaysAgo: null,
+    avatarSrc: "https://picsum.photos/seed/zhuang/400/600",
+    bannerColor: "from-blue-500/20 to-purple-500/20",
+    featured: false,
+    desc: ""
+  },
+  {
+    id: 2,
+    name: "阿米娅",
+    author: "Fang",
+    tags: [],
+    likes: 0,
+    createdAt: "2024-05-11",
+    views: 7,
+    activeDaysAgo: null,
+    avatarSrc: "https://picsum.photos/seed/amiya/400/300",
+    bannerColor: "from-cyan-500/20 to-blue-500/20",
+    featured: false,
+    desc: ""
+  },
+  {
+    id: 3,
+    name: "管理员 Endministrator",
+    author: "Doodle Bear",
+    tags: ["终末地", "endfield", "管理员", "endministrator"],
+    likes: 0,
+    createdAt: "2024-05-10",
+    views: 8,
+    activeDaysAgo: null,
+    avatarSrc: "https://picsum.photos/seed/admin/400/500",
+    bannerColor: "from-gray-500/20 to-slate-500/20",
+    featured: false,
+    desc: ""
+  },
+  {
+    id: 4,
+    name: "amadeues",
+    author: "sadous",
+    tags: [],
+    likes: 0,
+    createdAt: "2024-05-09",
+    views: 6,
+    activeDaysAgo: 54,
+    avatarInitials: "A",
+    bannerColor: "from-rose-500/20 to-red-500/20",
+    featured: false,
+    desc: ""
+  },
+  {
+    id: 5,
+    name: "罗伦斯",
+    author: "Doodle Bear",
+    tags: ["狼与香辛料", "罗伦斯"],
+    likes: 0,
+    createdAt: "2024-05-08",
+    views: 16,
+    activeDaysAgo: 62,
+    avatarSrc: "https://picsum.photos/seed/lawrence/400/400",
+    bannerColor: "from-amber-500/20 to-orange-500/20",
+    featured: false,
+    desc: ""
+  },
+  {
+    id: 6,
+    name: "佩丽卡",
+    author: "Doodle Bear",
+    tags: ["终末地", "endfield", "鹈鹕", "佩丽卡"],
+    likes: 2,
+    createdAt: "2024-05-07",
+    views: 25,
+    activeDaysAgo: null,
+    avatarSrc: "https://picsum.photos/seed/pelica/400/550",
+    bannerColor: "from-indigo-500/20 to-purple-500/20",
+    featured: false,
+    desc: ""
+  },
+  {
+    id: 7,
+    name: "赫萝",
+    author: "Doodle Bear",
+    tags: [],
+    likes: 1,
+    createdAt: "2024-05-06",
+    views: 36,
+    activeDaysAgo: 62,
+    avatarSrc: "https://picsum.photos/seed/holo/400/700",
+    bannerColor: "from-orange-500/20 to-amber-500/20",
+    featured: false,
+    desc: ""
+  },
+  {
+    id: 8,
+    name: "Amadeus",
+    author: "Develop",
+    tags: ["命运石之门", "牧濑红莉栖", "amadeus", "助手"],
+    likes: 5,
+    createdAt: "2024-05-05",
+    views: 158,
+    activeDaysAgo: 50,
+    avatarSrc: "https://picsum.photos/seed/kurisu/400/450",
+    bannerColor: "from-red-500/20 to-orange-500/20",
+    featured: true,
+    desc: "Amadeus 牧濑红莉栖"
+  },
+  {
+    id: 9,
+    name: "Anya",
+    author: "Doodle Bear",
+    tags: [],
+    likes: 0,
+    createdAt: "2024-05-04",
+    views: 16,
+    activeDaysAgo: null,
+    avatarSrc: "https://picsum.photos/seed/anya/400/350",
+    bannerColor: "from-pink-500/20 to-rose-500/20",
+    featured: true,
+    desc: "Hi I am KanBan Musume from AnySoul.\nI am also AI that learn from humans."
+  },
+  {
+    id: 10,
+    name: "KUMA",
+    author: "Doodle Bear",
+    tags: [],
+    likes: 0,
+    createdAt: "2024-05-03",
+    views: 18,
+    activeDaysAgo: 28,
+    avatarSrc: "https://picsum.photos/seed/kuma/400/500",
+    bannerColor: "from-emerald-500/20 to-teal-500/20",
+    featured: true,
+    desc: ""
+  }
+];
 
 export function Plaza() {
   const [activeTab, setActiveTab] = useLocalStorage("plaza-activeTab", "souls");
   const [searchQuery, setSearchQuery] = useState("");
   const [activeSort, setActiveSort] = useLocalStorage("plaza-activeSort", "default");
   const [infoFilter, setInfoFilter] = useLocalStorage("plaza-infoFilter", "all");
-  const [activeTag, setActiveTag] = useLocalStorage("plaza-activeTag", "all");
-  const plaza = useContent<PlazaContent>("plaza.main", defaultPlazaContent);
   const { t } = useThemeLanguage();
 
   const TABS = [
@@ -38,7 +174,7 @@ export function Plaza() {
   ];
 
   const sortedSouls = useMemo(() => {
-    let result = plaza.souls.filter(visibleSoul);
+    let result = [...SOULS_DATA];
 
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
@@ -49,12 +185,8 @@ export function Plaza() {
       );
     }
 
-    if (activeTag !== "all") {
-      result = result.filter(s => s.tags.includes(activeTag));
-    }
-
     if (activeSort === "default") {
-      result.sort((a, b) => Number(b.featured) - Number(a.featured) || b.views - a.views || a.name.localeCompare(b.name));
+      result.sort(() => Math.random() - 0.5);
     } else if (activeSort === "hot") {
       result.sort((a, b) => b.likes - a.likes);
     } else if (activeSort === "new") {
@@ -66,9 +198,7 @@ export function Plaza() {
     }
 
     return result;
-  }, [activeSort, activeTag, plaza.souls, searchQuery]);
-
-  const tags = plaza.tags.length > 0 ? plaza.tags : Array.from(new Set(plaza.souls.flatMap((s) => s.tags)));
+  }, [activeSort, searchQuery]);
 
   return (
     <div className="mx-auto w-full max-w-7xl px-4 py-8 md:py-16">
@@ -169,9 +299,9 @@ export function Plaza() {
             </div>
 
             <div className="flex flex-wrap items-center gap-2 mb-6">
-              <button onClick={() => setActiveTag("all")} className={cn("px-3 py-1 text-xs rounded-full border transition-colors", activeTag === "all" ? "bg-primary text-primary-foreground" : "hover:bg-accent text-foreground")}>{t("plaza.filter.all")}</button>
-              {tags.map(tag => (
-                <button key={tag} onClick={() => setActiveTag(tag)} className={cn("px-3 py-1 text-xs rounded-full border transition-colors text-foreground", activeTag === tag ? "bg-primary text-primary-foreground" : "hover:bg-accent")}>
+              <button className="px-3 py-1 text-xs rounded-full border bg-primary text-primary-foreground">{t("plaza.filter.all")}</button>
+              {['endfield', '终末地', 'endministrator', '管理员', '小庄', '佩丽卡', '鹈鹕', '罗伦斯', '狼与香辛料', '助手'].map(tag => (
+                <button key={tag} className="px-3 py-1 text-xs rounded-full border hover:bg-accent transition-colors text-foreground">
                   {tag}
                 </button>
               ))}

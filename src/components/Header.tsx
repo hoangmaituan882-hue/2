@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { cn } from "../lib/utils";
-import { Menu, ChevronDown, Moon, Sun, Languages, User, Compass, Newspaper, Gamepad2, Video, Mic, ExternalLink } from "lucide-react";
+import { Menu, ChevronDown, Moon, Sun, Languages, User, Compass, Newspaper, Gamepad2, Video, Mic, ExternalLink, Bot } from "lucide-react";
 import { motion } from "motion/react";
 import { useThemeLanguage } from "../contexts/ThemeLanguageContext";
 import { AuthModal } from "./AuthModal";
@@ -146,6 +146,27 @@ export function Header({ isWorkspace, isGames }: { isWorkspace?: boolean; isGame
              <span>{t("header.about")}</span>
           </a>
 
+          <a href="#aibot" className={cn("inline-flex items-center gap-1.5 h-[36px] px-4 rounded-full border transition-all duration-300 font-bold text-sm text-foreground ml-0.5", 
+            isScrolled ? "border-border bg-card hover:bg-muted shadow-[0_2px_10px_rgb(0,0,0,0.02)]" : "border-transparent bg-transparent hover:bg-black/5 dark:hover:bg-white/5 shadow-none"
+          )}>
+             <Bot className="size-4" />
+             <span>@bot</span>
+          </a>
+
+          <a href="#timeline" className={cn("inline-flex items-center gap-1.5 h-[36px] px-4 rounded-full border transition-all duration-300 font-bold text-sm text-foreground ml-0.5", 
+            isScrolled ? "border-border bg-card hover:bg-muted shadow-[0_2px_10px_rgb(0,0,0,0.02)]" : "border-transparent bg-transparent hover:bg-black/5 dark:hover:bg-white/5 shadow-none"
+          )}>
+             <svg className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+             <span>人生时间线</span>
+          </a>
+
+          <a href="#uicomponents" className={cn("inline-flex items-center gap-1.5 h-[36px] px-4 rounded-full border transition-all duration-300 font-bold text-sm text-foreground ml-0.5", 
+            isScrolled ? "border-border bg-card hover:bg-muted shadow-[0_2px_10px_rgb(0,0,0,0.02)]" : "border-transparent bg-transparent hover:bg-black/5 dark:hover:bg-white/5 shadow-none"
+          )}>
+             <Gamepad2 className="size-4" />
+             <span>UI 组件</span>
+          </a>
+
           <button onClick={handleWorkspaceClick} className="ml-1 inline-flex items-center justify-center h-[36px] px-5 rounded-full bg-[#abc378] text-[#1a1a1a] hover:bg-[#a0b86e] hover:shadow-md transition-all font-bold text-sm shadow-sm tracking-wide cursor-pointer">
              {t("header.workspace")}
           </button>
@@ -197,6 +218,16 @@ export function Header({ isWorkspace, isGames }: { isWorkspace?: boolean; isGame
               <a href="#about" onClick={() => setIsMobileMenuOpen(false)} className="text-xl font-medium tracking-tight flex items-center gap-3">
                  <svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
                  {t("header.about")}
+              </a>
+              <a href="#aibot" onClick={() => setIsMobileMenuOpen(false)} className="text-xl font-medium tracking-tight flex items-center gap-3">
+                 <Bot className="size-5" /> @bot
+              </a>
+              <a href="#timeline" onClick={() => setIsMobileMenuOpen(false)} className="text-xl font-medium tracking-tight flex items-center gap-3">
+                 <svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+                 人生时间线
+              </a>
+              <a href="#uicomponents" onClick={() => setIsMobileMenuOpen(false)} className="text-xl font-medium tracking-tight flex items-center gap-3">
+                 <Gamepad2 className="size-5" /> UI 组件
               </a>
               <div className="mt-4 pt-6 border-t border-border/40">
                 <button onClick={(e) => { setIsMobileMenuOpen(false); handleWorkspaceClick(e); }} className="w-full flex items-center justify-center h-[50px] rounded-xl bg-[#abc378] text-[#1a1a1a] font-bold text-lg">

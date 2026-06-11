@@ -19,10 +19,15 @@ import { Screenings } from "./pages/Screenings"
 import { Workspace } from "./pages/Workspace"
 import { About } from "./features/About"
 import { Gaming } from "./pages/Gaming"
+import { AIBot } from "./pages/AIBot"
 
 import { ThemeLanguageProvider } from "./contexts/ThemeLanguageContext"
 
+import { Scroll3DCarousel } from "./components/Scroll3DCarousel"
+
 import { Talks } from "./features/Talks"
+import { Timeline } from "./features/Timeline"
+import { UIComponents } from "./pages/UIComponents"
 
 export default function App() {
   const [route, setRoute] = useState(window.location.hash);
@@ -130,12 +135,55 @@ export default function App() {
     );
   }
 
+  if (route === '#timeline') {
+    return (
+      <ThemeLanguageProvider>
+        <div className="relative min-h-screen bg-background text-foreground antialiased selection:bg-primary/30 font-sans flex flex-col overflow-x-hidden transition-colors duration-300">
+          <Header />
+          <main className="flex-1 flex flex-col pt-32 pb-8">
+            <Timeline />
+          </main>
+          <Footer />
+        </div>
+      </ThemeLanguageProvider>
+    );
+  }
+
+  if (route === '#aibot') {
+    return (
+      <ThemeLanguageProvider>
+        <div className="relative min-h-screen bg-background text-foreground antialiased selection:bg-primary/30 font-sans flex flex-col overflow-x-hidden transition-colors duration-300">
+          <Header />
+          <main className="flex-1 flex flex-col pt-24 pb-8">
+            <AIBot />
+          </main>
+          <Footer />
+        </div>
+      </ThemeLanguageProvider>
+    );
+  }
+
+  if (route === '#uicomponents') {
+    return (
+      <ThemeLanguageProvider>
+        <div className="relative min-h-screen bg-background text-foreground antialiased selection:bg-primary/30 font-sans flex flex-col overflow-x-hidden transition-colors duration-300">
+          <Header />
+          <main className="flex-1 flex flex-col pt-24 pb-8">
+            <UIComponents />
+          </main>
+          <Footer />
+        </div>
+      </ThemeLanguageProvider>
+    );
+  }
+
   return (
     <ThemeLanguageProvider>
       <div className="relative min-h-screen bg-background text-foreground antialiased selection:bg-primary/30 font-sans flex flex-col overflow-x-hidden transition-colors duration-300">
         <Header />
         <main className="flex-1 flex flex-col pt-16">
           <Hero />
+          <Scroll3DCarousel />
           <GrowWithYouSection />
           <FeaturesBento />
           <ScenariosMarquee />

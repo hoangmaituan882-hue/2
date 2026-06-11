@@ -3,7 +3,7 @@ import { useThemeLanguage } from "../../contexts/ThemeLanguageContext";
 import { Play, FileText, ArrowUpRight, Search, FileDown, Plus, Calendar, Folder, Archive, X, Clock, Users, Heart, Bot, Tag, List, MessageSquare, Sparkles, Filter, Eye, MessageCircle, ArrowDownUp } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "../../lib/utils";
-import { TalkModal } from "./TalkModal";
+import { TalkDetail } from "../TalkDetail";
 import { TopicsModal } from "./TopicsModal";
 
 function WaveScrollbar({ scrollRef, schedules }: { scrollRef: React.RefObject<HTMLDivElement>, schedules?: any[] }) {
@@ -229,6 +229,17 @@ export function Talks() {
   const liveTalkData = latestYearTalks[0] || archiveData[0];
   const schedules = latestYearTalks.slice(1);
 
+  if (selectedTalk) {
+    return (
+      <div 
+        className="fixed inset-0 z-[100] bg-background overflow-y-auto overflow-x-hidden animate-in fade-in zoom-in-95 duration-300"
+        ref={(el) => { if (el) el.scrollTop = 0; }}
+      >
+        <TalkDetail talk={selectedTalk} onBack={() => setSelectedTalk(null)} t={t} />
+      </div>
+    );
+  }
+
   if (showAllArchive) {
     return (
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8 md:py-12 animate-in fade-in duration-700 bg-background text-foreground">
@@ -326,8 +337,6 @@ export function Talks() {
             </div>
           ))}
         </div>
-        
-        <TalkModal talk={selectedTalk} onClose={() => setSelectedTalk(null)} t={t} />
       </div>
     );
   }
@@ -689,8 +698,6 @@ export function Talks() {
 
         </div>
       </div>
-      
-      <TalkModal talk={selectedTalk} onClose={() => setSelectedTalk(null)} t={t} />
       <TopicsModal isOpen={showTopicsModal} onClose={() => setShowTopicsModal(false)} t={t} initialTopicId={activeTopicId} />
       
     </div>
